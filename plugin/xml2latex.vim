@@ -2,7 +2,7 @@
 " Author: Eustaquio 'TaQ' Rangel <eustaquiorangel@yahoo.com>
 " http://beam.to/taq
 " $Date: 04/05/2004 $
-" $Revision: 0.1 $
+" $Revision: 0.2 $
 "
 " Configuration comments:
 " Just put this script inside your ~/.vim/plugins dir
@@ -17,34 +17,34 @@
 " 
 function! XML2Latex()
 	" request the tab length (default 5mm)
-	let sz=5
-	let gs=inputdialog("Value for tab length (mm)",sz)
-	if gs == ""
+	let s:sz=5
+	let s:gs=inputdialog("Value for tab length (mm)",s:sz)
+	if s:gs == ""
 		return
 	endif	
-	let sz=gs
+	let s:sz=s:gs
 	
 	" count the max tabs on all the lines
-	let rc=line("$")
-	let mt=0
-	let i=1
+	let s:rc=line("$")
+	let s:mt=0
+	let s:i=1
 	
 	" loop on all rows
-	while i<=rc
-		let pos=0
-		let cnt=0
+	while s:i<=s:rc
+		let s:pos=0
+		let s:cnt=0
 		" loop on the current row till no matches found
-		while pos>=0
-			let pos=match(getline(i),"[[:tab:]]",pos)
-			if pos>=0
-				let cnt=cnt+1
-				let pos=pos+1
+		while s:pos>=0
+			let s:pos=match(getline(s:i),"[[:tab:]]",s:pos)
+			if s:pos>=0
+				let s:cnt=s:cnt+1
+				let s:pos=s:pos+1
 			endif
 		endwhile
-		if cnt>mt
-			let mt=cnt
+		if s:cnt>s:mt
+			let s:mt=s:cnt
 		endif	
-		let i=i+1
+		let s:i=s:i+1
 	endwhile 	
 
 	" replace stuff	
@@ -52,15 +52,16 @@ function! XML2Latex()
 	%s/[[:tab:]]/\\>/g
 	%s/\#/\\#/g
 	%s/_/\\_/g
+	%s/\$/\\$/g
 	
 	" starts the tabbing environment
 	:0
 	norm O\begin{tabbing} 
-	let cnt=0
+	let s:cnt=0
 	norm o
-	while cnt<mt
-		exec "norm i \\hspace*{".sz.".mm} \\= "
-		let cnt=cnt+1
+	while s:cnt<s:mt
+		exec "norm i \\hspace*{".s:sz.".mm} \\= "
+		let s:cnt=s:cnt+1
 	endwhile
 	norm i \kill 
 
