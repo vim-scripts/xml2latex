@@ -1,0 +1,5 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=954
+
+This script converts your XML files into a LaTeX tabbing environment, creating tab stops according to the max number of tabs on the file, changes the tab chars into \> chat marking chars and put \\ on the end of all the lines of the XML file.
+I use it inside a \begin{tt} \end{tt} block here to get all my < and > chars converted correctly.
+It's well known that the \begin{verbatim} \end{verbatim} does the trick, but I wrote this script because I need to apply some font changes (bold,tiny) on the XML code.
